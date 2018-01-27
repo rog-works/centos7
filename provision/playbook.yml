@@ -4,12 +4,3 @@
   roles:
     - os
     - docker
-
-# - hosts: aws
-#   remote_user: ec2-user
-#   become: yes
-#   roles:
-#     - os
-#     - git
-#     - docker
-#     - user
