@@ -11,6 +11,17 @@ services:
     links:
       - centos-db:db
 
+  centos-cms:
+    container_name: centos-cms
+    image: centos-cms:latest
+    build: ./docker/cms
+    ports:
+      - 18080:80
+    volumes:
+      - ./cms:/var/www
+    links:
+      - centos-db:db
+
   centos-db:
     container_name: centos-db
     image: centos-db:latest

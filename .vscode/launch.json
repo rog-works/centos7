@@ -14,5 +14,15 @@
 			"port": 9000,
 			"log": true
 		},
+		{
+			"name": "Listen for XDebug cms",
+			"type": "php",
+			"request": "launch",
+			 "pathMappings": {
+				 "/var/www": "${workspaceRoot}/cms"
+			 },
+			"port": 9001,
+			"log": true
+		},
 	]
 }
