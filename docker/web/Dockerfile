@@ -17,7 +17,8 @@ RUN yum update -y \
       httpd-${HTTPD_VERSION} \
  && pecl install xdebug-${XDEBUG_VERSION} \
  && touch /var/log/httpd/access_log \
- && touch /var/log/httpd/error_log
+ && touch /var/log/httpd/error_log \
+ && touch /var/log/xdebug.log
 
 COPY ./entrypoint.sh /
 COPY ./etc/httpd/conf/httpd.conf /etc/httpd/conf/
