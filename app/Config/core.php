@@ -216,7 +216,7 @@
  *
  */
 	Configure::write('Session', array(
-		'defaults' => 'cache'
+		'defaults' => 'php'
 	));
 
 /**
