@@ -17,10 +17,19 @@ RUN yum update -y \
       gcc \
       make \
       httpd-${HTTPD_VERSION} \
+      mod_ssl \
  && pecl install xdebug-${XDEBUG_VERSION} \
  && touch /var/log/httpd/access_log \
  && touch /var/log/httpd/error_log \
- && touch /var/log/xdebug.log
+ && touch /var/log/xdebug.log \
+ && mkdir -p /etc/pki/tls/certs \
+ && mkdir -p /etc/pki/tls/private \
+ && openssl genrsa 4096 > server.key \
+ && openssl req -new -key server.key -out server.csr -subj '/C=JP/ST=Tokyo/L=Tokyo/O=Example Ltd./OU=Web/CN=example.com' \
+ && openssl x509 -req -in server.csr -days 3650 -req -signkey server.key > server.crt \
+ && mv server.crt /etc/pki/tls/certs/ \
+ && mv server.key /etc/pki/tls/private/ \
+ && rm -f /etc/httpd/conf.d/ssl.conf
 
 COPY ./entrypoint.sh /
 COPY ./etc/httpd/conf/httpd.conf /etc/httpd/conf/
