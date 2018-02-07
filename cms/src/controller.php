@@ -9,4 +9,4 @@
 	//}
 	//echo "query string --------------<br>";
 	//print_r($_SERVER);
-	echo file_get_contents('/var/www/public/index.html');
+	echo file_get_contents('/var/www/webroot/index.html');

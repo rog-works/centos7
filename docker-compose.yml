@@ -1,9 +1,9 @@
 version: '3'
 services:
-  centos-web:
-    container_name: centos-web
-    image: centos-web:latest
-    build: ./docker/web
+  centos-app:
+    container_name: centos-app
+    image: centos-app:latest
+    build: ./docker/app
     ports:
       - 80:80
     volumes:
@@ -11,16 +11,16 @@ services:
     links:
       - centos-db:db
 
-  centos-cms:
-    container_name: centos-cms
-    image: centos-cms:latest
-    build: ./docker/cms
-    ports:
-      - 18080:80
-    volumes:
-      - ./cms:/var/www
-    links:
-      - centos-db:db
+  # centos-cms:
+  #   container_name: centos-cms
+  #   image: centos-cms:latest
+  #   build: ./docker/cms
+  #   ports:
+  #     - 18080:80
+  #   volumes:
+  #     - ./:/var/www
+  #   links:
+  #     - centos-db:db
 
   centos-db:
     container_name: centos-db
