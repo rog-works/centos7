@@ -29,6 +29,7 @@ RUN yum update -y \
  && openssl x509 -req -in server.csr -days 3650 -req -signkey server.key > server.crt \
  && mv server.crt /etc/pki/tls/certs/ \
  && mv server.key /etc/pki/tls/private/ \
+ && rm -f server.csr \
  && rm -f /etc/httpd/conf.d/ssl.conf
 
 COPY ./entrypoint.sh /
