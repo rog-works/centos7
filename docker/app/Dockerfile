@@ -14,10 +14,13 @@ RUN yum update -y \
       php-mbstring \
       php-mysql \
       php-pecl-apc \
+      php-gd \
       gcc \
       make \
       httpd-${HTTPD_VERSION} \
       mod_ssl \
+#      sendmail \
+#      postfix \
  && pecl install xdebug-${XDEBUG_VERSION} \
  && touch /var/log/httpd/access_log \
  && touch /var/log/httpd/error_log \
@@ -31,11 +34,15 @@ RUN yum update -y \
  && mv server.key /etc/pki/tls/private/ \
  && rm -f server.csr \
  && rm -f /etc/httpd/conf.d/ssl.conf
+# && mkdir -p /etc/skel/Maildir/{new,cur,tmp} \
+# && chmod -R 700 /etc/skel/Maildir \
+# && echo -e '2\n' | alternatives --config mta
 
 COPY ./entrypoint.sh /
 COPY ./etc/httpd/conf/httpd.conf /etc/httpd/conf/
 COPY ./etc/httpd/conf.d /etc/httpd/conf.d
 COPY ./etc/php.d/xdebug.ini /etc/php.d/xdebug.ini
 COPY ./etc/php.d/timezone.ini /etc/php.d/timezone.ini
+#COPY ./etc/postfix/main.cf /main.cf
 
 ENTRYPOINT [ "/entrypoint.sh" ]
