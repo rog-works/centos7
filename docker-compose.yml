@@ -1,36 +1,36 @@
 version: '3'
 services:
-  #centos-app:
-  #  container_name: centos-app
-  #  image: centos-app:latest
-  #  build: ./docker/app
-  #  ports:
-  #    - 443:443
-  #  volumes:
-  #    - ./:/var/www
-  #    - /data/app:/var/www/app/tmp
+  app:
+    container_name: centos-app
+    image: centos-app:latest
+    build: ./docker/app
+    ports:
+      - 443:443
+    volumes:
+      - ./:/var/www
+      - app-tmp:/var/www/app/tmp
   #  links:
-  #    - centos-db:db
+  #    - db:db
 
-  centos-nginx:
+  nginx:
     container_name: centos-nginx
     image: centos-nginx:latest
     build: ./docker/nginx
     ports:
-      - 18080:80
+      - 10443:443
     links:
-      - centos-php-fpm:app
+      - php-fpm:app
 
-  centos-php-fpm:
+  php-fpm:
     container_name: centos-php-fpm
     image: centos-php-fpm:latest
     build: ./docker/php-fpm
     volumes:
       - ./php-fpm:/var/www
-    #links:
-    #  - centos-db:db
+    #links
+    #  - db:db
 
-  # centos-cms:
+  # cms:
   #   container_name: centos-cms
   #   image: centos-cms:latest
   #   build: ./docker/cms
@@ -39,15 +39,21 @@ services:
   #   volumes:
   #     - ./:/var/www
   #   links:
-  #     - centos-db:db
+  #     - db:db
 
-  #centos-db:
-  #  container_name: centos-db
-  #  image: centos-db:latest
-  #  build: ./docker/db
-  #  ports:
-  #    - 3306:3306
-  #  volumes:
-  #    - /data/mysql:/var/lib/mysql
-  #  environment:
-  #    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  # db:
+  #   container_name: centos-db
+  #   image: centos-db:latest
+  #   build: ./docker/db
+  #   ports:
+  #     - 3306:3306
+  #   volumes:
+  #     - app-db:/var/lib/mysql
+  #   environment:
+  #     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
+volumes:
+  app-tmp:
+    driver: local
+  app-db:
+    driver: local
