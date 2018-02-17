@@ -7,7 +7,7 @@ WORKDIR /var/www
 
 RUN apk add --update --no-cache \
 # install dependencies
-      make gcc g++ autoconf re2c file bzip2-dev dpkg-dev tzdata \
+      make gcc g++ autoconf re2c file bzip2-dev dpkg dpkg-dev tzdata \
       freetype-dev libpng-dev libjpeg-turbo-dev \
  && rm -rf /var/cache/apk/*
 
