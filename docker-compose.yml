@@ -1,14 +1,14 @@
 version: '3'
 services:
-  app:
-    container_name: centos-app
-    image: centos-app:latest
-    build: ./docker/app
-    ports:
-      - 443:443
-    volumes:
-      - ./:/var/www
-      - app-tmp:/var/www/app/tmp
+    # app:
+    #container_name: centos-app
+    #image: centos-app:latest
+    #build: ./docker/app
+    #ports:
+    #  - 443:443
+    #volumes:
+    #  - ./:/var/www
+    #  - app-tmp:/var/www/app/tmp
   #  links:
   #    - db:db
 
@@ -17,7 +17,7 @@ services:
     image: centos-nginx:latest
     build: ./docker/nginx
     ports:
-      - 10443:443
+      - 443:443
     links:
       - php-fpm:app
 
