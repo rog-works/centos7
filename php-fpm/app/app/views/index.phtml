@@ -1,14 +1,11 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf8">
-		<title>Hello Phalcon</title>
+		<title>index</title>
 	</head>
 	<body>
 		<span>
-			Hellow
-			<? if (!empty($user)): ?>
-				<?= $user->name ?>
-			<? endif; ?>
+			Hellow <?=!empty($user) ? $user->name : '' ?>
 		</span>
 	</body>
 </html>
