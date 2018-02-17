@@ -27,8 +27,8 @@ services:
     build: ./docker/php-fpm
     volumes:
       - ./php-fpm:/var/www
-    #links
-    #  - db:db
+    links:
+      - db:db
 
   # cms:
   #   container_name: centos-cms
@@ -41,16 +41,16 @@ services:
   #   links:
   #     - db:db
 
-  # db:
-  #   container_name: centos-db
-  #   image: centos-db:latest
-  #   build: ./docker/db
-  #   ports:
-  #     - 3306:3306
-  #   volumes:
-  #     - app-db:/var/lib/mysql
-  #   environment:
-  #     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  db:
+    container_name: centos-db
+    image: centos-db:latest
+    build: ./docker/db
+    ports:
+      - 3306:3306
+    volumes:
+      - app-db:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
 volumes:
   app-tmp:

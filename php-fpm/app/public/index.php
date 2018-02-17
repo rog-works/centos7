@@ -23,7 +23,7 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Application;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Url as UrlProvider;
-use Phalcon\Db\Pdo\Mysql as DbAdapter;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 $loader = new Loader();
 $loader->registerDirs([
@@ -43,12 +43,19 @@ $di->set('url', function() {
 	$url->setBaseUri('/');
 	return $url;
 });
+$di->set('db', function() {
+	return new DbAdapter([
+		'host' => 'db',
+		'username' => 'root',
+		'password' => '',
+		'dbname' => 'test',
+	]);
+});
 
 try {
 	$app = new Application($di);
 	$res = $app->handle();
 	$res->send();
 } catch (Exception $e) {
-	//print_r($di);
 	echo $e->getMessage() . "\n";
 }

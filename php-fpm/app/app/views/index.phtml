@@ -1,3 +1,14 @@
-<div>
-	Hellow Phalcon!
-</div>
+<html lang="ja">
+	<head>
+		<meta charset="utf8">
+		<title>Hello Phalcon</title>
+	</head>
+	<body>
+		<span>
+			Hellow
+			<? if (!empty($user)): ?>
+				<?= $user->name ?>
+			<? endif; ?>
+		</span>
+	</body>
+</html>
