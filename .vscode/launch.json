@@ -15,11 +15,11 @@
 			"log": true
 		},
 		{
-			"name": "Listen for XDebug cms",
+			"name": "Listen for XDebug php-fpm",
 			"type": "php",
 			"request": "launch",
 			 "pathMappings": {
-				 "/var/www": "${workspaceRoot}"
+				 "/var/www": "${workspaceRoot}/php-fpm"
 			 },
 			"port": 9001,
 			"log": true

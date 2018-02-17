@@ -46,3 +46,10 @@ RUN mkdir -p /usr/src/php/ext \
 
 # install xdebug
 RUN pecl install xdebug-${XDEBUG_VERSION}
+
+RUN touch /var/log/xdebug.log \
+ && chmod 777 /var/log/xdebug.log
+
+# ini files
+COPY etc/php.d/timezone.ini /usr/local/etc/php/conf.d/
+COPY etc/php.d/xdebug.ini /usr/local/etc/php/conf.d/
