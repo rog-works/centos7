@@ -36,5 +36,6 @@ Phalcon workspace
 [vagrant]$ docker-compose db bash -c 'mysql -u root < /root/init.sql'
 
 # checking application
-[vagrant]$ curl localhost
+[vagrant] exit
+[host]$ curl localhost
 ```
