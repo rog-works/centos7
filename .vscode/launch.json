@@ -9,17 +9,7 @@
 			"type": "php",
 			"request": "launch",
 			 "pathMappings": {
-				 "/var/www": "${workspaceRoot}"
-			 },
-			"port": 9000,
-			"log": true
-		},
-		{
-			"name": "Listen for XDebug php-fpm",
-			"type": "php",
-			"request": "launch",
-			 "pathMappings": {
-				 "/var/www": "${workspaceRoot}/php-fpm"
+				 "/var/www": "${workspaceRoot}/app"
 			 },
 			"port": 9001,
 			"log": true
