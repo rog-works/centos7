@@ -20,6 +20,9 @@ Phalcon workspace
 ```bash
 [host]$ cd /path/to/workspace
 
+# install vagrant plugin
+[host]$ vagrant plugin install vagrant-vbguest
+
 # running virtual machine
 [host]$ vagrant up
 [host]$ vagrant ssh
@@ -36,6 +39,6 @@ Phalcon workspace
 [vagrant]$ docker-compose db bash -c 'mysql -u root < /root/init.sql'
 
 # checking application
-[vagrant] exit
+[vagrant]$ exit
 [host]$ curl localhost
 ```
