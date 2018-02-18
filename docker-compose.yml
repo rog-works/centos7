@@ -1,49 +1,26 @@
 version: '3'
 services:
-    # app:
-    #container_name: centos-app
-    #image: centos-app:latest
-    #build: ./docker/app
-    #ports:
-    #  - 443:443
-    #volumes:
-    #  - ./:/var/www
-    #  - app-tmp:/var/www/app/tmp
-  #  links:
-  #    - db:db
-
   nginx:
-    container_name: centos-nginx
-    image: centos-nginx:latest
+    container_name: phalcon-nginx
+    image: phalcon-nginx:latest
     build: ./docker/nginx
     ports:
       - 80:80
     links:
       - php-fpm:app
 
-  php-fpm:
-    container_name: centos-php-fpm
-    image: centos-php-fpm:latest
-    build: ./docker/php-fpm
+  app:
+    container_name: phalcon-app
+    image: phalcon-app:latest
+    build: ./docker/app
     volumes:
-      - ./php-fpm:/var/www
+      - ./app:/var/www
     links:
       - db:db
 
-  # cms:
-  #   container_name: centos-cms
-  #   image: centos-cms:latest
-  #   build: ./docker/cms
-  #   ports:
-  #     - 10443:443
-  #   volumes:
-  #     - ./:/var/www
-  #   links:
-  #     - db:db
-
   db:
-    container_name: centos-db
-    image: centos-db:latest
+    container_name: phalcon-db
+    image: phalcon-db:latest
     build: ./docker/db
     ports:
       - 3306:3306

@@ -1,48 +1,54 @@
-FROM centos:6.9
+FROM php:7.1-fpm-alpine3.4
 
-ENV PHP_VERSION 5.3.3
-ENV HTTPD_VERSION 2.2.15
-ENV XDEBUG_VERSION 2.2.7
+ENV PHALCON_VERSION=3.1.2
+ENV XDEBUG_VERSION=2.5.5
 
 WORKDIR /var/www
 
-RUN yum update -y \
- && yum install -y \
-      php-${PHP_VERSION} \
-      php-devel \
-      php-pear \
-      php-mbstring \
-      php-mysql \
-      php-pecl-apc \
-      php-gd \
-      gcc \
-      make \
-      httpd-${HTTPD_VERSION} \
-      mod_ssl \
-#      sendmail \
-#      postfix \
+RUN apk add --update --no-cache \
+ # install dependencies
+      make gcc g++ autoconf re2c file bzip2-dev dpkg dpkg-dev tzdata \
+      libjpeg freetype-dev libpng-dev libjpeg-turbo-dev \
+  && rm -rf /var/cache/apk/* \
+ # install php-gd
+ && docker-php-ext-configure gd \
+      --with-freetype-dir=/usr/include/ \
+      --with-png-dir=/usr/include/ \
+      --with-jpeg-dir=/usr/include/ \
+ && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
+ && docker-php-ext-install -j${NPROC} gd \
+ # install php extensions
+ && docker-php-ext-install bz2 \
+ && docker-php-ext-install calendar \
+ && docker-php-ext-install mysqli \
+ && docker-php-ext-install pcntl \
+ && docker-php-ext-install pdo_mysql \
+ && docker-php-ext-install shmop \
+ && docker-php-ext-install sockets \
+ && docker-php-ext-install sysvmsg \
+ && docker-php-ext-install sysvsem \
+ && docker-php-ext-install sysvshm \
+ # install php-phalcon
+ && mkdir -p /usr/src/php/ext \
+ && cd /usr/src/php/ext \
+ && curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
+ && tar xzf v${PHALCON_VERSION}.tar.gz \
+ && cd /usr/src/php/ext/cphalcon-${PHALCON_VERSION}/build \
+ && sh install \
+ && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
+ && cd ~ \
+ && rm -fr /usr/src/php \
+ # install xdebug
  && pecl install xdebug-${XDEBUG_VERSION} \
- && touch /var/log/httpd/access_log \
- && touch /var/log/httpd/error_log \
  && touch /var/log/xdebug.log \
- && mkdir -p /etc/pki/tls/certs \
- && mkdir -p /etc/pki/tls/private \
- && openssl genrsa 4096 > server.key \
- && openssl req -new -key server.key -out server.csr -subj '/C=JP/ST=Tokyo/L=Tokyo/O=Example Ltd./OU=Web/CN=example.com' \
- && openssl x509 -req -in server.csr -days 3650 -req -signkey server.key > server.crt \
- && mv server.crt /etc/pki/tls/certs/ \
- && mv server.key /etc/pki/tls/private/ \
- && rm -f server.csr \
- && rm -f /etc/httpd/conf.d/ssl.conf
-# && mkdir -p /etc/skel/Maildir/{new,cur,tmp} \
-# && chmod -R 700 /etc/skel/Maildir \
-# && echo -e '2\n' | alternatives --config mta
+ && chmod 777 /var/log/xdebug.log \
+ # set timezone
+ && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+ && echo "Asia/Tokyo" > /etc/timezone \
+ # uninstall build packages
+ && apk del make gcc g++
 
-COPY ./entrypoint.sh /
-COPY ./etc/httpd/conf/httpd.conf /etc/httpd/conf/
-COPY ./etc/httpd/conf.d /etc/httpd/conf.d
-COPY ./etc/php.d/xdebug.ini /etc/php.d/xdebug.ini
-COPY ./etc/php.d/timezone.ini /etc/php.d/timezone.ini
-#COPY ./etc/postfix/main.cf /main.cf
-
-ENTRYPOINT [ "/entrypoint.sh" ]
+# copy files
+COPY etc/php.d/timezone.ini /usr/local/etc/php/conf.d/
+COPY etc/php.d/xdebug.ini /usr/local/etc/php/conf.d/
+COPY root/scripts /root/scripts

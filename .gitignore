@@ -1,5 +1,3 @@
 /.vagrant/
-/lib/
-/app/tmp/
-/php-fpm/app/vendor
-/php-fpm/app/composer*
+/app/app/vendor
+/app/app/composer*
