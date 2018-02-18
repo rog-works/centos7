@@ -1,5 +1,5 @@
 Vagrant.configure(2) do |config|
-  config.vm.box = "centos7"
+  config.vm.box = "centos/7"
   config.vm.box_url = "../boxes/CentOS-7-x86_64-Vagrant-1801_02.VirtualBox.box"
   config.vm.hostname = "centos7"
   config.vm.network "forwarded_port", guest: 22, host: 12222, id: "ssh"
