@@ -4,6 +4,18 @@ use Phalcon\Mvc\Controller;
 
 class TestController extends Controller {
 	public function indexAction() {
-		echo 'hoge';
+		$transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+			->setUsername('hoge@gmail.com')
+			->setPassword('password');
+		$mailer = new Swift_Mailer($transport);
+		$message = (new Swift_Message('subject'))
+			->setFrom(['hoge@gmail.com' => 'send user'])
+			->setTo(['fuga@gmail.com' => 'respond user'])
+			->setBody('mail body');
+		if ($mailer->send($message)) {
+			$this->view->result = 'success';
+		} else {
+			$this->view->result = 'failure';
+		}
 	}
 }

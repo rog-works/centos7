@@ -18,6 +18,8 @@
 // 	echo $e->getMessage();
 // }
 
+require_once realpath('../vendor/autoload.php');
+
 use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Application;
