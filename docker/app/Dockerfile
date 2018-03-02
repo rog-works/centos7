@@ -18,16 +18,17 @@ RUN apk add --update --no-cache \
  && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
  && docker-php-ext-install -j${NPROC} gd \
  # install php extensions
- && docker-php-ext-install bz2 \
- && docker-php-ext-install calendar \
- && docker-php-ext-install mysqli \
- && docker-php-ext-install pcntl \
- && docker-php-ext-install pdo_mysql \
- && docker-php-ext-install shmop \
- && docker-php-ext-install sockets \
- && docker-php-ext-install sysvmsg \
- && docker-php-ext-install sysvsem \
- && docker-php-ext-install sysvshm \
+ && docker-php-ext-install \
+      bz2 \
+      calendar \
+      mysqli \
+      pcntl \
+      pdo_mysql \
+      shmop \
+      sockets \
+      sysvmsg \
+      sysvsem \
+      sysvshm \
  # install php-phalcon
  && mkdir -p /usr/src/php/ext \
  && cd /usr/src/php/ext \
@@ -48,7 +49,13 @@ RUN apk add --update --no-cache \
  # uninstall build packages
  && apk del make gcc g++
 
+# install mail
+RUN apk add --update --no-cache \
+      ssmtp mailx \
+ && rm -fr /var/cache/apk/*
+
 # copy files
 COPY etc/php.d/timezone.ini /usr/local/etc/php/conf.d/
 COPY etc/php.d/xdebug.ini /usr/local/etc/php/conf.d/
 COPY root/scripts /root/scripts
+COPY etc/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf

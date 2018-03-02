@@ -1,7 +1,7 @@
 FROM nginx:1.13-alpine
 
 RUN apk add --update --no-cache \
-      tzdata php-xdebug \
+      tzdata php7-xdebug \
  && rm -rf /var/cache/apk/* \
  # set timezone
  && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \

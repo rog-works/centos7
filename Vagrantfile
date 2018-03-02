@@ -4,6 +4,7 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "centos7"
   config.vm.network "forwarded_port", guest: 22, host: 12222, id: "ssh"
   config.vm.network "forwarded_port", host: 80, guest: 80, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", host: 8080, guest: 8080, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", host: 443, guest: 443, host_ip: "127.0.0.1"
   config.vm.network "private_network", ip: "192.168.33.12"
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox", mount_options: ['dmode=777','fmode=744']
