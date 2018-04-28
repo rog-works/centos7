@@ -1,4 +1,2 @@
 /.vagrant/
-/registry/
-/app/app/vendor
-/app/app/composer*
+/vendor

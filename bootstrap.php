@@ -1,24 +1,7 @@
 <?php
+define('APP_DIR', __DIR__);
 
-// use Phalcon\Mvc\Micro;
-// use Phalcon\Di\FactoryDefault;
-// use Phalcon\Mvc\View;
-// 
-// try {
-// 	$di = new FactoryDefault();
-// 	$di->set('view', function() {
-// 		$view = new View();
-// 		$view->setViewDir('app/views');
-// 	});
-// 
-// 	$app = new Micro($di);
-// 	$app->get('/', function() {});
-// 	$app->handle();
-// } catch (Exception $e) {
-// 	echo $e->getMessage();
-// }
-
-require_once realpath('../vendor/autoload.php');
+require_once(realpath(APP_DIR . '/vendor/autoload.php'));
 
 use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
@@ -29,15 +12,15 @@ use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 $loader = new Loader();
 $loader->registerDirs([
-	'../app/controllers',
-	'../app/models',
+	APP_DIR . '/controllers',
+	APP_DIR . '/models',
 ]);
 $loader->register();
 
 $di = new FactoryDefault();
 $di->set('view', function() {
 	$view = new View();
-	$view->setViewsDir('../app/views');
+	$view->setViewsDir(APP_DIR . '/views');
 	return $view;
 });
 $di->set('url', function() {

@@ -9,7 +9,7 @@
 			"type": "php",
 			"request": "launch",
 			 "pathMappings": {
-				 "/var/www": "${workspaceRoot}/app"
+				 "/var/www": "${workspaceRoot}"
 			 },
 			"port": 9001,
 			"log": true

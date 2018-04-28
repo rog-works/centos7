@@ -1,6 +1,6 @@
-FROM php:7.1-fpm-alpine3.4
+FROM php:7.2.5-fpm-alpine3.7
 
-ENV PHALCON_VERSION=3.1.2
+ENV PHALCON_VERSION=3.3.2
 ENV XDEBUG_VERSION=2.5.5
 
 WORKDIR /var/www
@@ -47,7 +47,10 @@ RUN apk add --update --no-cache \
  && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  && echo "Asia/Tokyo" > /etc/timezone \
  # uninstall build packages
- && apk del make gcc g++
+ && apk del make gcc g++ \
+ # changed UID/GID 
+ && deluser www-data \
+ && adduser -D -u www-data 1000
 
 # install mail
 RUN apk add --update --no-cache \
