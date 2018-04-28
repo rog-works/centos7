@@ -1,8 +1,8 @@
 <?php
 
-use Phalcon\Mvc\Controller;
+namespace App\Controllers;
 
-class TestController extends Controller {
+class MailsController extends \Phalcon\Mvc\Controller {
 	public function indexAction() {
 		$transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
 			->setUsername('hoge@gmail.com')

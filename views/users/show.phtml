@@ -1,0 +1,11 @@
+<html lang="ja">
+	<head>
+		<meta charset="utf8">
+		<title>users</title>
+	</head>
+	<body>
+		<?php foreach (get_object_vars($user) as $key => $value): ?>
+			<div><?= $key ?>: <?= $value; ?></div>
+		<?php endforeach; ?>
+	</body>
+</html>

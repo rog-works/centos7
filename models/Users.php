@@ -1,8 +1,8 @@
 <?php
 
-use Phalcon\Mvc\Model;
+namespace App\Models;
 
-class Users extends Model {
+class Users extends \Phalcon\Mvc\Model {
 	public $id;
 	public $name;
 	public $email;

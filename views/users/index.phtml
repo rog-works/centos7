@@ -1,0 +1,11 @@
+<html lang="ja">
+	<head>
+		<meta charset="utf8">
+		<title>users</title>
+	</head>
+	<body>
+		<?php foreach ($users as $user): ?>
+			<div><?= $user->id ?>: <a href="/users/<?= $user->id ?>"><?= $user->name; ?></a></div>
+		<?php endforeach; ?>
+	</body>
+</html>
