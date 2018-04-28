@@ -19,4 +19,8 @@ return [
 		'password' => 'password',
 		'dbname' => 'app',
 	],
+	'routes' => [
+		'/:controller' => ['controller' => 1, 'action' => 'index'],
+		'/:controller/:int' => ['controller' => 1, 'action' => 'show', 'int' => 2],
+	],
 ];

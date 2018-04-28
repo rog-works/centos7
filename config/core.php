@@ -11,10 +11,12 @@ $di->set('dispatcher', function() {
 	return $dispatcher;
 });
 
-$di->set('url', function() {
-	$url = new \Phalcon\Mvc\UrlProvider();
-	$url->setBaseUri($this['config']->url->baseUri);
-	return $url;
+$di->set('router', function() {
+	$router = new \Phalcon\Mvc\Router;
+	foreach ($this['config']->routes->toArray() as $path => $map) {
+		$router->add($path, $map);
+	}
+	return $router;
 });
 
 $di->set('view', function() {
