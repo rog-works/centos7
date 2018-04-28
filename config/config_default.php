@@ -20,7 +20,10 @@ return [
 		'dbname' => 'app',
 	],
 	'routes' => [
-		'/:controller' => ['controller' => 1, 'action' => 'index'],
-		'/:controller/:int' => ['controller' => 1, 'action' => 'show', 'int' => 2],
+		['verb' => 'GET',    'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'index']],
+		['verb' => 'GET',    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'show', 'int' => 2]],
+		['verb' => 'POST',   'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'create']],
+		['verb' => 'PUT',    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'update', 'int' => 2]],
+		['verb' => 'DELETE', 'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'delete', 'int' => 2]],
 	],
 ];
