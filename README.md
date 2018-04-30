@@ -41,3 +41,14 @@ Phalcon workspace
 [vagrant]$ exit
 [host]$ curl localhost
 ```
+
+## CLI
+
+```bash
+# login app
+[vagrant] cd /vagrant
+[vagrant] docker-compose exec app ash
+
+# executed cli task
+[app]$ env APP_ENV=local php bootstrap-cli.php <task> <action> [arguments...]
+```
