@@ -50,7 +50,7 @@ RUN apk add --update --no-cache \
  && apk del make gcc g++ \
  # changed UID/GID 
  && deluser www-data \
- && adduser -D -u www-data 1000
+ && adduser -D -u 1000 www-data
 
 # install mail
 RUN apk add --update --no-cache \
