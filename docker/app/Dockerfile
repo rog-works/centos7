@@ -57,6 +57,10 @@ RUN apk add --update --no-cache \
       ssmtp mailx \
  && rm -fr /var/cache/apk/*
 
+# create directories
+RUN mkdir -p /var/log/app \
+ && chown www-data:www-data /var/log/app
+
 # copy files
 COPY etc/php.d/timezone.ini /usr/local/etc/php/conf.d/
 COPY etc/php.d/xdebug.ini /usr/local/etc/php/conf.d/
