@@ -14,8 +14,7 @@ $di->set('dispatcher', function() {
 $di->set('router', function() {
 	$router = new \Phalcon\Mvc\Router;
 	foreach ($this['config']->routes as $route) {
-		$method = sprintf('%s%s', 'add', ucwords(strtolower($route->verb)));
-		$router->$method($route->path, $route->map->toArray());
+		$router->add($route->path, $route->map->toArray())->via($route->verbs->toArray());
 	}
 	return $router;
 });

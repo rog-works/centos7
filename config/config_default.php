@@ -20,10 +20,10 @@ return [
 		'dbname' => 'app',
 	],
 	'routes' => [
-		['verb' => 'GET',    'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'index']],
-		['verb' => 'GET',    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'show', 'int' => 2]],
-		['verb' => 'POST',   'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'create']],
-		['verb' => 'PUT',    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'update', 'int' => 2]],
-		['verb' => 'DELETE', 'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'delete', 'int' => 2]],
+		['verbs' => ['GET'],    'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'index']],
+		['verbs' => ['GET'],    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'show', 'int' => 2]],
+		['verbs' => ['POST'],   'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'create']],
+		['verbs' => ['PUT'],    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'update', 'int' => 2]],
+		['verbs' => ['DELETE'], 'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'delete', 'int' => 2]],
 	],
 ];
