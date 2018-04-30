@@ -1,7 +1,6 @@
 Phalcon workspace
 ===
 
-
 # Requirements
 
 * VirtuaBox: 5.2.6
@@ -12,8 +11,8 @@ Phalcon workspace
 # Dependencies
 
 * Nginx: 1.13
-* PHP: 7.1
-* Phalcon: 3.1.2
+* PHP: 7.2.5
+* Phalcon: 3.3.2
 
 # Usage
 
