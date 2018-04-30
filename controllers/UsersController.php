@@ -22,7 +22,7 @@ class UsersController extends \Phalcon\Mvc\Controller {
 			}
 		}
 		if (!$user->save()) {
-			throw new \Exception(sprintf('Model save failed. error = %s', implode(',', $user->getMessages())), 500);
+			throw new \Phalcon\Exception(sprintf('Model save failed. error = %s', implode(',', $user->getMessages())));
 		}
 	}
 }

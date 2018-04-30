@@ -1,4 +1,5 @@
 <?php
+
 use Phalcon\Mvc\Micro;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\View;

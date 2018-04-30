@@ -3,7 +3,8 @@
 $di = new \Phalcon\Di\FactoryDefault();
 $di->set('config', function() {
 	$paths = [
-		APP_DIR . '/config/config_default.php',
+		APP_DIR . '/config/config_core.php',
+		APP_DIR . '/config/config_web.php',
 		APP_DIR . "/config/config_{$_SERVER['APP_ENV']}.php",
 	];
 	$config = new \Phalcon\Config(require_once(array_shift($paths)));
