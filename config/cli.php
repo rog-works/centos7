@@ -20,7 +20,7 @@ $loader->register();
 
 foreach ($di['config']->di as $key => $definition) {
 	$di->set($key, function() use ($definition) {
-		$args = $definition->args->toArray();
+		$args = array_values($definition->args->toArray());
 		if (isset($definition->method)) {
 			if ($definition->method === '__construct')  {
 				return new $definition->class(...$args);
@@ -30,10 +30,7 @@ foreach ($di['config']->di as $key => $definition) {
 				return $depended;
 			}
 		} else if (isset($definition->callback) && is_callable($definition->callback)) {
-			$depended = new $definition->class();
-			$callback = $definition->callback;
-			$callback($depended, ...$args);
-			return $depended;
+			return ($definition->callback)(...$args);
 		} else {
 			throw new Exception('Invalid di definition', 500);
 		}

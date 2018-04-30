@@ -17,11 +17,12 @@ return [
 			],
 		],
 		'router' => [
-			'class' => '\Phalcon\Mvc\Router',
-			'callback' => function($router, $routes) {
+			'callback' => function(array $routes) {
+				$router = new \Phalcon\Mvc\Router;
 				foreach ($routes as $route) {
 					$router->add($route['path'], $route['map'])->via($route['verbs']);
 				}
+				return $router;
 			},
 			'args' => [
 				[

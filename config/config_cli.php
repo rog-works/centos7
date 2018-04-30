@@ -9,5 +9,10 @@ return [
 				'App\Tasks',
 			],
 		],
+		'logger' => [
+			'args' => [
+				'path' => '/var/log/app/cli.log', // XXX override 'path'
+			],
+		],
 	],
 ];
