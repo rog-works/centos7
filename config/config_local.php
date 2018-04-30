@@ -1,10 +1,16 @@
 <?php
 
 return [
-	'db' => [
-		'host' => 'db',
-		'username' => 'root',
-		'password' => '',
-		'dbname' => 'test',
+	'di' => [
+		'db' => [
+			'args' => [
+				[
+					'host' => 'db',
+					'username' => 'root',
+					'password' => '',
+					'dbname' => 'test',
+				],
+			],
+		],
 	],
 ];

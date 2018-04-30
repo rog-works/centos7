@@ -2,40 +2,41 @@
 
 $di = new \Phalcon\Di\FactoryDefault();
 $di->set('config', function() {
-	return new \Phalcon\Config(require_once(APP_DIR . '/config/config.php'));
-});
-
-$di->set('dispatcher', function() {
-	$dispatcher = new \Phalcon\Mvc\Dispatcher;
-	$dispatcher->setDefaultNamespace($this['config']->dispatcher->namespace);
-	return $dispatcher;
-});
-
-$di->set('router', function() {
-	$router = new \Phalcon\Mvc\Router;
-	foreach ($this['config']->routes as $route) {
-		$router->add($route->path, $route->map->toArray())->via($route->verbs->toArray());
+	$paths = [
+		APP_DIR . '/config/config_default.php',
+		APP_DIR . "/config/config_{$_SERVER['APP_ENV']}.php",
+	];
+	$config = new \Phalcon\Config(require_once(array_shift($paths)));
+	foreach ($paths as $path) {
+		$config->merge(new \Phalcon\Config(require_once($path)));
 	}
-	return $router;
-});
-
-$di->set('view', function() {
-	$view = new \Phalcon\Mvc\View();
-	$view->setViewsDir(APP_DIR . $this['config']->view->baseDir);
-	return $view;
-});
-
-$di->set('db', function() {
-	return new \Phalcon\Db\Adapter\Pdo\Mysql($this['config']->db->toArray());
+	return $config;
 });
 
 $loader = new \Phalcon\Loader();
-$loader->registerNamespaces(
-	array_map(
-		function($path) { return APP_DIR . $path; },
-		$di['config']->namespaces->toArray()
-	)
-);
+$loader->registerNamespaces($di['config']->loader->namespaces->toArray());
 $loader->register();
+
+foreach ($di['config']->di as $key => $definition) {
+	$di->set($key, function() use ($definition) {
+		$args = $definition->args->toArray();
+		if (isset($definition->method)) {
+			if ($definition->method === '__construct')  {
+				return new $definition->class(...$args);
+			} else {
+				$depended = new $definition->class();
+				$depended->{$definition->method}(...$args);
+				return $depended;
+			}
+		} else if (isset($definition->callback) && is_callable($definition->callback)) {
+			$depended = new $definition->class();
+			$callback = $definition->callback;
+			$callback($depended, ...$args);
+			return $depended;
+		} else {
+			throw new Exception('Invalid di definition', 500);
+		}
+	});
+}
 
 return $di;

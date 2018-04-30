@@ -13,17 +13,16 @@ class UsersController extends \Phalcon\Mvc\Controller {
 		$this->view->user = Users::findFirst($id);
 	}
 
-	public function createAction(int $id) {
-		if (!empty(Users::findFirst($id))) {
-			throw new Exception('Bad Request', 400);
-		}
-
+	public function createAction() {
 		$data = $this->request->getPost();
 		$user = new Users;
-		$user->name = $data['name'] ?? '';
-		$user->email = $data['email'] ?? '';
+		foreach ($user as $key => $_) {
+			if (isset($data[$key])) {
+				$user->{$key} = $data[$key];
+			}
+		}
 		if (!$user->save()) {
-			throw new Exception('Internal Server Error', 500);
+			throw new \Exception(sprintf('Model save failed. error = %s', implode(',', $user->getMessages())), 500);
 		}
 	}
 }
