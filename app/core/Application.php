@@ -28,7 +28,7 @@ abstract class Application {
 	private function inject(Di $di, array $definitions) {
 		foreach ($definitions as $key => $definition) {
 			$di->set($key, function() use ($definition) {
-				return (new \App\Di\Injector($definition['class'], $definition['methods']))->resolve();
+				return \App\Di\Injector::resolve($definition['class'], $definition['methods']);
 			});
 		}
 	}

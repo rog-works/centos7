@@ -3,32 +3,21 @@
 namespace App\Di;
 
 class Injector {
-	/** @var string */
-	private $class = '';
-
-	/** @var array */
-	private $methods = [];
-
-	public function __construct(string $class, array $methods) {
-		$this->class = $class;
-		$this->methods = $methods;
-	}
-
-	public function resolve() {
-		$instance = $this->create($this->methods['__construct'] ?? []);
-		foreach ($this->methods as $method => $args) {
+	public static function resolve(string $class, array $methods) {
+		$instance = self::create($class, $methods['__construct'] ?? []);
+		foreach ($methods as $method => $args) {
 			if ($method !== '__construct') {
-				$this->invoke($instance, $method, $args);
+				self::invoke($instance, $method, $args);
 			}
 		}
 		return $instance;
 	}
 
-	private function create(array $args) {
-		return new $this->class(...array_values($args));
+	private static function create(string $class, array $args) {
+		return new $class(...array_values($args));
 	}
 
-	private function invoke($instance, string $method, array $args) {
+	private static function invoke($instance, string $method, array $args) {
 		$instance->{$method}(...array_values($args));
 	}
 }
