@@ -33,6 +33,12 @@ return [
 						['verbs' => ['DELETE'], 'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'delete', 'int' => 2]],
 					],
 				],
+				'notFound' => [
+					[
+						'controller' => 'error',
+						'action' => 'show404',
+					],
+				],
 			],
 		],
 	],
