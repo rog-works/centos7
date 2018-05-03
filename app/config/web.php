@@ -6,8 +6,11 @@ return [
 	],
 	'depends' => [
 		'dispatcher' => [
-			'class' => \Phalcon\Mvc\Dispatcher::class,
+			'class' => \App\Mvc\Dispatcher::class,
 			'methods' => [
+				'__construct' => [
+					'di' => true,
+				],
 				'setDefaultNamespace' => [
 					'App\Controllers'
 				],

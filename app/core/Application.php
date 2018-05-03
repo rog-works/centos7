@@ -2,8 +2,9 @@
 
 namespace App\Core;
 
-use Phalcon\Config as Config;
+use Phalcon\Config;
 use Phalcon\Di;
+use App\Di\Injector;
 
 abstract class Application {
 	/** @var Di */
@@ -27,8 +28,8 @@ abstract class Application {
 
 	private function inject(Di $di, array $definitions) {
 		foreach ($definitions as $key => $definition) {
-			$di->set($key, function() use ($definition) {
-				return \App\Di\Injector::resolve($definition['class'], $definition['methods']);
+			$di->set($key, function() use ($di, $definition) {
+				return Injector::resolve($di, $definition['class'], $definition['methods']);
 			});
 		}
 	}
