@@ -24,20 +24,24 @@ abstract class Application {
 	}
 
 	private function inject(Di $di, array $definitions) {
+		$that = $this;
 		foreach ($definitions as $key => $definition) {
-			$di->set($key, function() use ($di, $definition) {
+			$di->set($key, function() use ($that, $definition) {
 				$depended = Injector::resolve($definition['class'], $definition['methods'] ?? []);
 				if (isset($definition['events'])) {
-					$eventsMamager = $di->getShared('eventsManager');
-					foreach ($definition['events'] as $eventType => $eventDefinition) {
-						$handler = Injector::resolve($eventDefinition['class'], $eventDefinition['methods'] ?? []);
-						$eventsMamager->attach($eventType, $handler);
-					}
-					$depended->setEventsManager($eventsMamager);
+					$depended->setEventsManager($that->injectEvents($this, $definition['events']));
 				}
 				return $depended;
 			});
 		}
+	}
+
+	private function injectEvents(Di $di, array $definitions) {
+		$eventsMamager = $di->getShared('eventsManager');
+		foreach ($definitions as $eventType => $definition) {
+			$eventsMamager->attach($eventType, Injector::resolve($definition['class'], $definition['methods'] ?? []));
+		}
+		return $eventsMamager;
 	}
 
 	public abstract function run();
