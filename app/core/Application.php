@@ -29,7 +29,16 @@ abstract class Application {
 	private function inject(Di $di, array $definitions) {
 		foreach ($definitions as $key => $definition) {
 			$di->set($key, function() use ($di, $definition) {
-				return Injector::resolve($di, $definition['class'], $definition['methods']);
+				$depended = Injector::resolve($definition['class'], $definition['methods'] ?? []);
+				if (isset($definition['events'])) {
+					$eventsMamager = $di->getShared('eventsManager');
+					foreach ($definition['events'] as $eventType => $eventDefinition) {
+						$handler = Injector::resolve($eventDefinition['class'], $eventDefinition['methods'] ?? []);
+						$eventsMamager->attach($eventType, $handler);
+					}
+					$depended->setEventsManager($eventsMamager);
+				}
+				return $depended;
 			});
 		}
 	}

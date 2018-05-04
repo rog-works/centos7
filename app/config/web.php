@@ -6,14 +6,16 @@ return [
 	],
 	'depends' => [
 		'dispatcher' => [
-			'class' => \App\Mvc\Dispatcher::class,
+			'class' => \Phalcon\Mvc\Dispatcher::class,
 			'methods' => [
-				'__construct' => [
-					'di' => true,
-				],
 				'setDefaultNamespace' => [
 					'App\Controllers'
 				],
+			],
+			'events' => [
+				'dispatch:beforeException' => [
+					'class' => \App\Plugins\ExceptionForwarder::class,
+				]
 			],
 		],
 		'view' => [
@@ -34,12 +36,6 @@ return [
 						['verbs' => ['POST'],   'path' => '/:controller',      'map' => ['controller' => 1, 'action' => 'create']],
 						['verbs' => ['PUT'],    'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'update', 'int' => 2]],
 						['verbs' => ['DELETE'], 'path' => '/:controller/:int', 'map' => ['controller' => 1, 'action' => 'delete', 'int' => 2]],
-					],
-				],
-				'notFound' => [
-					[
-						'controller' => 'error',
-						'action' => 'show404',
 					],
 				],
 			],
