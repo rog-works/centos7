@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'runner' => [
+		'class' => \Phalcon\Cli\Console::class,
+	],
 	'di' => [
 		'class' => \Phalcon\Di\FactoryDefault\Cli::class,
 	],

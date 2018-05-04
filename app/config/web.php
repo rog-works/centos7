@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'runner' => [
+		'class' => \Phalcon\Mvc\Application::class,
+	],
 	'di' => [
 		'class' => \Phalcon\Di\FactoryDefault::class,
 	],

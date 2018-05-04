@@ -7,15 +7,12 @@ use Phalcon\Di;
 use App\Di\Injector;
 
 abstract class Application {
-	/** @var Di */
-	private $di;
-
-	public function __construct(array $configPaths) {
+	public function createRunner(array $configPaths) {
 		$config = $this->loadConfig($configPaths);
-		$this->di = new $config->di->class();
-		$this->di->set('config', $config);
-		$this->inject($this->di, $config->depends->toArray());
-		return $this->di;
+		$di = new $config->di->class();
+		$di->set('config', $config);
+		$this->inject($di, $config->depends->toArray());
+		return new $config->runner->class($di);
 	}
 
 	private function loadConfig(array $paths): Config {
@@ -41,10 +38,6 @@ abstract class Application {
 				return $depended;
 			});
 		}
-	}
-
-	public function getDI(): Di {
-		return $this->di;
 	}
 
 	public abstract function run();

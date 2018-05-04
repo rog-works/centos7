@@ -7,11 +7,6 @@ class Cli extends \App\Core\Application {
 	private $args = [];
 
 	public function __construct(array $args) {
-		parent::__construct([
-			APP_DIR . '/config/core.php',
-			APP_DIR . '/config/cli.php',
-			APP_DIR . '/config/' . APP_ENV . '.php',
-		]);
 		$this->args = $this->parseArgs($args);
 	}
 
@@ -25,6 +20,10 @@ class Cli extends \App\Core\Application {
 	}
 
 	public function run() {
-		(new \Phalcon\Cli\Console($this->getDI()))->handle($this->args);
+		$this->createRunner([
+			APP_DIR . '/config/core.php',
+			APP_DIR . '/config/cli.php',
+			APP_DIR . '/config/' . APP_ENV . '.php',
+		])->handle($this->args);
 	}
 }
