@@ -1,5 +1,5 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exception;
 
 class Runtime extends \Exception {}

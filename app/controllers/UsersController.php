@@ -7,7 +7,7 @@ use App\Models\Users;
 class UsersController extends \Phalcon\Mvc\Controller {
 	public function indexAction() {
 		$this->view->users = Users::find();
-		throw new \App\Exceptions\Runtime('hoge');
+		throw new \App\Exception\Runtime('hoge');
 	}
 
 	public function showAction(int $id) {
@@ -23,7 +23,7 @@ class UsersController extends \Phalcon\Mvc\Controller {
 			}
 		}
 		if (!$user->save()) {
-			throw new \App\Exceptions\Runtime(sprintf('Model save failed. error = %s', implode(',', $user->getMessages())));
+			throw new \App\Exception\Runtime(sprintf('Model save failed. error = %s', implode(',', $user->getMessages())));
 		}
 	}
 }
