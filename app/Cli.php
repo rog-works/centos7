@@ -20,10 +20,6 @@ class Cli extends \App\Core\Application {
 	}
 
 	public function run() {
-		$this->createRunner([
-			APP_DIR . '/config/core.php',
-			APP_DIR . '/config/cli.php',
-			APP_DIR . '/config/' . APP_ENV . '.php',
-		])->handle($this->args);
+		$this->createRunner(APP_DIR . '/config/cli.php')->handle($this->args);
 	}
 }

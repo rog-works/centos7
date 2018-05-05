@@ -1,27 +1,6 @@
 <?php
-
-return [
-	'runner' => [
-		'class' => \Phalcon\Cli\Console::class,
-	],
-	'di' => [
-		'class' => \Phalcon\Di\FactoryDefault\Cli::class,
-	],
-	'depends' => [
-		'dispatcher' => [
-			'class' => \Phalcon\Cli\Dispatcher::class,
-			'methods' => [
-				'setDefaultNamespace' => [
-					'App\Tasks',
-				],
-			],
-		],
-		'logger' => [
-			'methods' => [
-				'__construct' => [
-					'path' => '/var/log/app/cli.log', // XXX override 'path'
-				],
-			],
-		],
-	],
-];
+return array_merge_recursive(
+	require_once(APP_DIR . '/config/core/core.php'),
+	require_once(APP_DIR . '/config/app/cli.php'),
+	require_once(APP_DIR . '/config/env/' . APP_ENV . '.php')
+);
