@@ -16,7 +16,7 @@ return [
 			'class' => \Phalcon\Db\Adapter\Pdo\Mysql::class,
 			'methods' => [
 				'__construct' => [
-					[
+					'settings' => [
 						'host' => 'xxx.xxx.xxx.xxx',
 						'username' => 'user',
 						'password' => 'password',

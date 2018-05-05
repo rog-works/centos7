@@ -3,6 +3,7 @@
 namespace App\Di;
 
 use Phalcon\Di;
+use Phalcon\Events\Manager as EventsManager;
 
 class Injector {
 	public static function inject(Di $di, array $definitions) {
@@ -10,18 +11,19 @@ class Injector {
 			$di->set($key, function() use ($definition) {
 				$depended = Resolver::resolve($definition['class'], $definition['methods'] ?? []);
 				if (isset($definition['events'])) {
-					$depended->setEventsManager(self::injectEvents($this, $definition['events']));
+					$eventsMamager = $this->getShared('eventsManager');
+					self::attachEvents($eventsMamager, $definition['events']);
+					$depended->setEventsManager($eventsMamager);
 				}
 				return $depended;
 			});
 		}
 	}
 
-	private static function injectEvents(Di $di, array $definitions) {
-		$eventsMamager = $di->getShared('eventsManager');
-		foreach ($definitions as $eventType => $definition) {
-			$eventsMamager->attach($eventType, Resolver::resolve($definition['class'], $definition['methods'] ?? []));
+	public static function attachEvents(EventsManager $eventsMamager, array $eventDefinitions) {
+		foreach ($eventDefinitions as $eventType => $definitions) {
+			foreach ($definitions as $class => $methods)
+			$eventsMamager->attach($eventType, Resolver::resolve($class, $methods));
 		}
-		return $eventsMamager;
 	}
 }

@@ -1,0 +1,23 @@
+<html lang="ja">
+	<head>
+		<meta charset="utf8">
+		<title>login</title>
+	</head>
+	<body>
+		<?= $this->flashSession->output() ?>
+		<form method="POST">
+			<input type="hidden" name="<?= $this->security->getTokenKey() ?>" value="<?= $this->security->getToken() ?>">
+			<table>
+				<tr>
+					<td>email</td>
+					<td><input type="text" value="<?= $user['email'] ?? '' ?>"></td>
+				</tr>
+				<tr>
+					<td>password</td>
+					<td><input type="text" value="<?= $user['password'] ?? '' ?>"></td>
+				</tr>
+			</table>
+			<input type="submit" value="apply">
+		</form>
+	</body>
+</html>

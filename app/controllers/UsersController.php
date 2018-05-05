@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Users;
 
-class UsersController extends \Phalcon\Mvc\Controller {
+class UsersController extends \App\Mvc\Controller {
 	public function indexAction() {
 		$this->view->users = Users::find();
 		throw new \App\Exception\Runtime('hoge');

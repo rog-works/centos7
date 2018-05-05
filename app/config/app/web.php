@@ -8,6 +8,9 @@ return [
 		'class' => \Phalcon\Di\FactoryDefault::class,
 	],
 	'depends' => [
+		'security' => [
+			'class' => \Phalcon\Security::class,
+		],
 		'dispatcher' => [
 			'class' => \Phalcon\Mvc\Dispatcher::class,
 			'methods' => [
@@ -17,9 +20,18 @@ return [
 			],
 			'events' => [
 				'dispatch:beforeException' => [
-					'class' => \App\Plugins\ExceptionForwarder::class,
+					\App\Plugins\ExceptionForwarder::class => [],
 				]
 			],
+		],
+		'session' => [
+			'class' => \Phalcon\Session\Adapter\Files::class,
+			'methods' => [
+				'start' => [],
+			],
+		],
+		'flashSession' => [
+			'class' => \Phalcon\Flash\Session::class,
 		],
 		'view' => [
 			'class' => \Phalcon\Mvc\View::class,
