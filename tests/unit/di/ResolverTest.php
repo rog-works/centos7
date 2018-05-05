@@ -2,16 +2,16 @@
 
 namespace AppTest\Unit\Di;
 
-use App\Di\Injector;
+use App\Di\Resolver;
 use AppTest\Helpers\TestHelper;
 
-class InjectorTest extends \PHPUnit\Framework\TestCase {
+class ResolverTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 * @test
 	 * @dataProvider resolveData
 	 */
 	public function resolve(string $class, array $methods, string $expected) {
-		$this->assertInstanceOf($expected, Injector::resolve($class, $methods));
+		$this->assertInstanceOf($expected, Resolver::resolve($class, $methods));
 	}
 
 	public function resolveData(): array {
@@ -32,7 +32,7 @@ class InjectorTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider createData
 	 */
 	public function create(string $class, array $args) {
-		$this->assertInstanceOf($class, TestHelper::invokeStaticMethod(Injector::class, 'create', [$class, $args]));
+		$this->assertInstanceOf($class, TestHelper::invokeStaticMethod(Resolver::class, 'create', [$class, $args]));
 	}
 
 	public function createData(): array {
@@ -50,7 +50,7 @@ class InjectorTest extends \PHPUnit\Framework\TestCase {
 	 * @expectedException \App\Exception\Runtime
 	 */
 	public function createException(string $class, array $args) {
-		TestHelper::invokeStaticMethod(Injector::class, 'create', [$class, $args]);
+		TestHelper::invokeStaticMethod(Resolver::class, 'create', [$class, $args]);
 	}
 
 	public function createExceptionData(): array {
@@ -65,7 +65,7 @@ class InjectorTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider invokeData
 	 */
 	public function invoke($instance, string $method, array $args) {
-		TestHelper::invokeStaticMethod(Injector::class, 'invoke', [$instance, $method, $args]);
+		TestHelper::invokeStaticMethod(Resolver::class, 'invoke', [$instance, $method, $args]);
 		$this->assertTrue(true);
 	}
 
@@ -82,7 +82,7 @@ class InjectorTest extends \PHPUnit\Framework\TestCase {
 	 * @expectedException \App\Exception\Runtime
 	 */
 	public function invokeException($instance, string $method, array $args) {
-		TestHelper::invokeStaticMethod(Injector::class, 'invoke', [$instance, $method, $args]);
+		TestHelper::invokeStaticMethod(Resolver::class, 'invoke', [$instance, $method, $args]);
 	}
 
 	public function invokeExceptionData(): array {

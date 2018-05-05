@@ -4,7 +4,7 @@ namespace App\Di;
 
 use App\Exception\Runtime as RuntimeException;
 
-class Injector {
+class Resolver {
 	public static function resolve(string $class, array $methods) {
 		$instance = self::create($class, $methods['__construct'] ?? []);
 		foreach ($methods as $method => $args) {

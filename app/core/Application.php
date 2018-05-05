@@ -4,7 +4,7 @@ namespace App\Core;
 
 use Phalcon\Config;
 use Phalcon\Di;
-use App\Di\Injector;
+use App\Di\Resolver;
 
 abstract class Application {
 	public function createRunner(array $configPaths) {
@@ -27,7 +27,7 @@ abstract class Application {
 		$that = $this;
 		foreach ($definitions as $key => $definition) {
 			$di->set($key, function() use ($that, $definition) {
-				$depended = Injector::resolve($definition['class'], $definition['methods'] ?? []);
+				$depended = Resolver::resolve($definition['class'], $definition['methods'] ?? []);
 				if (isset($definition['events'])) {
 					$depended->setEventsManager($that->injectEvents($this, $definition['events']));
 				}
@@ -39,7 +39,7 @@ abstract class Application {
 	private function injectEvents(Di $di, array $definitions) {
 		$eventsMamager = $di->getShared('eventsManager');
 		foreach ($definitions as $eventType => $definition) {
-			$eventsMamager->attach($eventType, Injector::resolve($definition['class'], $definition['methods'] ?? []));
+			$eventsMamager->attach($eventType, Resolver::resolve($definition['class'], $definition['methods'] ?? []));
 		}
 		return $eventsMamager;
 	}
